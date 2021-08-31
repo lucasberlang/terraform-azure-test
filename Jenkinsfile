@@ -8,7 +8,7 @@ pipeline {
 			steps {
 				container('terraform') {
 					echo "La rama de la que se va a hacer el checkout es: master"
-					git branch: "master", url: 'git@github.com:lucasberlang/terraform-azure-test.git'
+					git branch: "master", url: 'https://github.com/lucasberlang/terraform-azure-test.git'
 				}
 			}
 		}
