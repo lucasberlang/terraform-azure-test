@@ -8,7 +8,7 @@ pipeline {
 			steps {
 				container('terraform') {
 					echo "La rama de la que se va a hacer el checkout es: master"
-					git branch: "master", credentialsId: 'GitLab', url: 'git@gitlab.bluetab.net:lucas.calvo/terraform-azure-test.git'
+					git branch: "master", url: 'git@github.com:lucasberlang/terraform-azure-test.git'
 				}
 			}
 		}
@@ -22,10 +22,7 @@ pipeline {
  		stage('Terraform init') {
  			steps {
 				container('terraform') {
- 					withCredentials([sshUserPrivateKey(credentialsId: 'GitLab', keyFileVariable: 'GIT_SSH')]) {
-					sh 'ssh-agent'
- 					sh 'mkdir ~/.ssh && ssh-keyscan -H gitlab.bluetab.net >> ~/.ssh/known_hosts && eval $(ssh-agent) && ssh-add ${GIT_SSH} && ssh-add -l && terraform init -upgrade'
-					}
+ 					sh 'terraform init -upgrade'
 				}
 			}
  		}
