@@ -33,7 +33,7 @@ pipeline {
 					string(credentialsId: 'vaultToken', variable: 'VAULT_TOKEN')
 					]) {
  					sh 'export VAULT_ADDR=${VAULT_ADDR} && export VAULT_TOKEN=${VAULT_TOKEN} && terraform plan'
-					slackSend channel: "#caixabank",color: '#BADA55', message: "Plan completed! Do you approve deployment? ${env.RUN_DISPLAY_URL}"
+					slackSend channel: "#practica-cloud-deployments",color: '#BADA55', message: "Plan completed! Do you approve deployment? ${env.RUN_DISPLAY_URL}"
 					}
 				}
 			}
@@ -67,7 +67,7 @@ pipeline {
 		stage('Waiting to review the infrastructure') {
  			steps {
 				container('terraform') {
-					slackSend channel: "#caixabank", color: '#BADA55', message: "Waiting 5 minutes before destroy the infrastructure!"
+					slackSend channel: "#practica-cloud-deployments", color: '#BADA55', message: "Waiting 5 minutes before destroy the infrastructure!"
 					sh 'sleep 300'
 				}
 			}
@@ -80,7 +80,7 @@ pipeline {
 					string(credentialsId: 'vaultToken', variable: 'VAULT_TOKEN')
 					]) {
  					sh 'export VAULT_ADDR=${VAULT_ADDR} && export VAULT_TOKEN=${VAULT_TOKEN} && terraform destroy -auto-approve'
-					slackSend channel: "#caixabank", color: '#BADA55', message: "Destroy completed! Build logs from jenkins server ${env.RUN_DISPLAY_URL}"
+					slackSend channel: "#practica-cloud-deployments", color: '#BADA55', message: "Destroy completed! Build logs from jenkins server ${env.RUN_DISPLAY_URL}"
 					}
 				}
  			}
